@@ -112,6 +112,9 @@ final class LinkStatsControlerListener implements IterationEndsListener, Iterati
 
 	@Override
 	public void notifyShutdown(ShutdownEvent event) {
+		if (createLinkStatsInIteration(event.getIteration())) {
+			linkStats.writeFile(this.controlerIO.getOutputFilename(Controler.DefaultFiles.linkstats));
+		}
 
 		String fileName = this.controlerIO.getOutputFilename(Controler.DefaultFiles.linkscsv);
 		CSVFormat format = CSVFormat.DEFAULT.builder()
